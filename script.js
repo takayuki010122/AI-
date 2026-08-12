@@ -1,24 +1,22 @@
 function doPost(e) {
   try {
-    var params = e.parameter;
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
     
-    // スプレッドシートの最終行にデータを追加
-    sheet.appendRow([
-      new Date(),       // 日時
-      params.name,      // お名前
-      params.email,     // メールアドレス
-      params.topic,     // ご相談内容
-      params.timing,    // 時期
-      params.message    // 詳細メッセージ
-    ]);
-    
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'success' }))
+    // フォームの各 name 属性と一致させます
+    var name = e.parameter.name || '';
+    var email = e.parameter.email || '';
+    var category = e.parameter.category || '';
+    var timing = e.parameter.timing || '';
+    var message = e.parameter.message || '';
+    var timestamp = new Date();
+
+    // スプレッドシートの最終行に追加
+    sheet.appendRow([timestamp, name, email, category, timing, message]);
+
+    return ContentService.createTextOutput(JSON.stringify({ result: "success" }))
       .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ result: "error", error: error.toString() }))
       .setMimeType(ContentService.MimeType.JSON);
   }
 }
