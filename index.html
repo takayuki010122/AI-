@@ -1,76 +1,183 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="紙を漉くところから、折り紙の設計・制作までを一人で手掛ける。早川蒼太の折り紙作品、折り図、和紙。ご相談・お問い合わせはこちらから。"><title>一枚の紙から生まれる、無限の美しさ。｜早川蒼太</title><link rel="stylesheet" href="style.css"></head><body>
+const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz6AcmHTnKrApNczD70T9GN2nNxImwdIpGuR09smacDZHkjaYno_CuXBUvIoXXLceoE/exec';
 
-<div class="announce">現在のご新規制作のご相談受付状況：<b>2026年10月分まで受付中</b>（月間の制作数に限りがございます）</div>
+const menuBtn = document.querySelector(".menu");
+const mobileNav = document.querySelector(".mobile-nav");
 
-<header class="header"><a class="brand" href="#top"><span>折</span><b>早川蒼太<small>紙を漉き、折り上げる作家。</small></b></a><nav><a href="#story">紙文化</a><a href="#process">制作工程</a><a href="#gallery">作品</a><a href="#diagram">折り図</a><a href="#washi">和紙</a><a href="#profile">作家</a></nav><a class="head-cta" href="#contact">ご相談・お問い合わせ</a><button class="menu" aria-label="メニュー">☰</button></header>
-<nav class="mobile-nav"><a href="#story">紙文化</a><a href="#process">制作工程</a><a href="#gallery">作品</a><a href="#diagram">折り図</a><a href="#washi">和紙</a><a href="#profile">作家</a><a class="btn primary" href="#contact">ご相談・お問い合わせ</a></nav>
+if (menuBtn && mobileNav) {
+  menuBtn.addEventListener("click", () => {
+    mobileNav.classList.toggle("open");
+  });
+  mobileNav.querySelectorAll("a").forEach((a) => {
+    a.addEventListener("click", () => mobileNav.classList.remove("open"));
+  });
+}
 
-<main id="top">
-<section class="hero"><div class="paper p1"></div><div class="paper p2"></div><div class="hero-copy reveal"><p class="eyebrow">ORIGAMI / WASHI / JAPANESE PAPER CULTURE</p><h1>一枚の紙が、<em>ここまで美しくなる。</em></h1><p class="lead">紙を折る。<br>ただそれだけで、平面だった一枚の紙は、<br>命を宿した作品へと姿を変える。</p><p class="hero-welcome">経験も、年齢も問いません。<br>まずは気軽に、作品をのぞいてみてください。</p><div class="actions"><a class="btn primary" href="#contact">まずはご相談する →</a><a class="link" href="#gallery">作品を見る ↓</a></div><p class="hero-note-cap">オーダーメイド制作は一点ずつ手作業のため、月あたりの新規ご相談には限りがあります。<br>気になる方はお早めに。</p></div><div class="hero-art reveal"><div class="shadow"></div><div class="origami"><i></i><i></i><i></i><i></i><i></i><i></i></div><small>折り紙作品 / SOTA HAYAKAWA</small></div><div class="hero-note">一枚の紙　｜　折る　｜　ひらく　｜　生まれる</div></section>
+const revealEls = document.querySelectorAll(".reveal");
 
-<section class="section intro" id="story"><span class="label">01 / HISTORY</span><div class="heading"><p class="kicker">折り紙は、もともと大人の趣味でした。</p><h2>子供の遊び、というイメージは<br>実はまだ新しいものです。</h2></div><div class="compare"><article><small>ORIGIN</small><h3>折り紙のはじまり</h3><div class="mini"><span>折形</span><span>儀礼</span><span>贈答</span></div><p>紙を折って包む「折形」の文化は、平安時代以前からある礼法・作法のひとつでした。江戸時代に紙が広く普及すると、大人の趣味として折る楽しみが広がっていきます。</p></article><b class="arrow">→</b><article class="dark"><small>NOW</small><h3>早川蒼太の折り紙</h3><div class="mini five"><span>動物</span><span>建築</span><span>幾何学</span><span>空間</span><span>アート</span></div><p>その系譜の上で、設計と折りの技術によって、一枚の紙を立体作品へ。同じ「折る」から、ここまで広がります。</p></article></div><blockquote>折り紙は、<strong>日本が世界に誇る立体芸術</strong>です。</blockquote>
+if ("IntersectionObserver" in window && revealEls.length) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.2});
+  revealEls.forEach((el) => io.observe(el));
+} else {
+  revealEls.forEach((el) => el.classList.add("visible"));
+}
 
-<div class="entry-band"><p class="kicker">はじめての方へ</p><h3>経験も、年齢も、関係ありません。</h3><ul><li>技術がなくても、まずは見るだけで大丈夫です</li><li>お子さまと一緒に楽しんでいただいても構いません</li><li>気になったら、折り図から気軽に試せます</li></ul><a class="link" href="#diagram">折り図を見てみる →</a></div>
-</section>
+const filterBtns = document.querySelectorAll(".filters button");
+const cards = document.querySelectorAll(".card");
 
-<section class="section washi" id="washi-story"><span class="label">02 / ONE PROCESS</span><div class="material"><div class="fiber-art"><div></div><div></div><div></div><b>漉く人が、<br>折る人。<small>WASHI TO ORIGAMI</small></b></div><div><p class="kicker">紙を漉くところから、作品は始まっている。</p><h2>和紙を漉ぐ手と、<br>折り上げる手は、同じ手です。</h2><p>早川蒼太は、折り紙作家であると同時に、作品に使う和紙そのものを自らの手で漉いています。原料となる繊維を選び、一枚ずつ手で漉き、時には作品に合わせて染めや漉き合わせを施す。保存殺菌剤に頼らず、自然な繊維の風合いを活かした紙づくりにこだわっています。紙が生まれる瞬間から、折り上がるまで。すべての工程が、一人の手の中でつながっています。</p><div class="tags"><span>手漉き和紙</span><span>美濃和紙</span><span>作品専用紙</span><span>保存殺菌剤不使用</span><span>染め・漉き合わせ</span></div><a class="link" href="#washi">和紙を見る →</a></div></div></section>
+filterBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    filterBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    const f = btn.dataset.filter;
+    cards.forEach((card) => {
+      const show = f === "all" || card.dataset.cat === f;
+      card.style.display = show ? "" : "none";
+    });
+  });
+});
 
-<section class="section process" id="process"><span class="label">03 / PROCESS</span><div class="heading center"><p class="kicker">紙を漉ぐことも、折ることも、一人の仕事。</p><h2>「折る」までに、<br>数えきれない工程がある。</h2></div><div class="steps five-steps"><article><small>01</small><strong>〜</strong><h3>漉く</h3><p>繊維を選び、一枚ずつ和紙を手で漉く。</p></article><article><small>02</small><strong>□</strong><h3>設計</h3><p>完成形から逆算し、折り線を構想する。</p></article><article><small>03</small><strong>◇</strong><h3>試作</h3><p>紙の厚みや角度を確かめながら形を磨く。</p></article><article><small>04</small><strong>╱╲</strong><h3>折る</h3><p>一つひとつの折りに、手の感覚を重ねる。</p></article><article><small>05</small><strong>✦</strong><h3>完成</h3><p>平面だった紙が、立体として息をする。</p></article></div><p class="process-note">紙を漉ぐところから折り上げるまで、すべて早川蒼太が一人で手掛けています。そのため、同時にお受けできる制作には限りがあります。</p></section>
+const modal = document.querySelector(".modal");
 
-<section class="section gallery" id="gallery"><span class="label">04 / GALLERY</span><div class="gallery-head"><div><p class="kicker">作品を見る</p><h2>紙から生まれた、<br>それぞれの物語。</h2></div><div class="filters"><button class="active" data-filter="all">すべて</button><button data-filter="animal">動物</button><button data-filter="architecture">建築</button><button data-filter="season">季節</button><button data-filter="space">展示・空間</button></div></div><div class="grid"><button class="card tall" data-cat="animal" data-title="生命のかたち" data-copy="一枚の紙から生まれる、静かな生命感。"><div class="visual v1">LIFE</div><b>生命のかたち</b><small>ANIMAL / ORIGAMI</small></button><button class="card" data-cat="architecture" data-title="折りの建築" data-copy="折り線が生む、構造と陰影。"><div class="visual v2">FORM</div><b>折りの建築</b><small>ARCHITECTURE / ORIGAMI</small></button><button class="card" data-cat="season" data-title="季節の紙" data-copy="紙の表情と季節の空気を重ねる。"><div class="visual v3">SEASON</div><b>季節の紙</b><small>SEASON / WASHI</small></button><button class="card" data-cat="space" data-title="空間を折る" data-copy="一枚の紙を、空間そのものへ。"><div class="visual v4">SPACE</div><b>空間を折る</b><small>INSTALLATION</small></button><button class="card" data-cat="animal" data-title="紙の動物園" data-copy="細かな折りがつくる、豊かな表情。"><div class="visual v5">ANIMAL</div><b>紙の動物園</b><small>ANIMAL / ORIGAMI</small></button><button class="card tall" data-cat="space" data-title="折りの景色" data-copy="作品と空間の境界をなくす展示表現。"><div class="visual v6">SCENE</div><b>折りの景色</b><small>INSTALLATION</small></button></div><p class="note">※ここは実際の早川さんの作品写真へ差し替えてください。</p><div class="section-action"><a class="link" href="#contact">気になる作品について相談する →</a></div></section>
+if (modal) {
+  const modalArt = modal.querySelector(".modal-art");
+  const modalTitle = modal.querySelector(".modal-copy h2");
+  const modalCopy = modal.querySelector(".modal-copy p");
+  const closeBtn = modal.querySelector(".close");
+  const backdrop = modal.querySelector(".backdrop");
 
-<section class="section diagram" id="diagram"><span class="label">05 / WORKS</span><div class="product"><div class="sheet"><div></div><div></div><div></div><div></div><span>完成作品</span></div><div><p class="kicker">2つの楽しみ方</p><h2>折り図で楽しむか、<br>オーダーメイドでお願いするか。</h2><p>折り図は在庫の制約がなく、すぐにお求めいただけます。多くは、その作品のために漉いた専用紙とセットでお届けしているため、紙選びに迷う必要もありません。一方でオーダーメイドの完成作品は、早川が紙を漉ぐところから一点ずつ手掛けるため、まずはご相談から承っています。</p><div class="flow"><span>紙を漉ぐ</span>→<span>折り図 or ご相談</span>→<span>手元・空間に</span></div></div></div>
-<div class="shops" id="shop">
-<article><small>DIAGRAM ／ すぐ購入可能</small><h3>折り図コレクション</h3><p>作品の構造をじっくり楽しめる折り図。作品専用に漉いた和紙とのセットもご用意しています。</p><strong>¥1,500〜</strong><a class="btn outline" href="#contact">購入・詳細を見る</a></article>
-<article class="featured"><small>ORDER MADE ／ 制作枠に限りがあります</small><h3>オーダーメイド作品・企業コラボ</h3><p>完成作品のご注文、展示・空間演出、企業コラボレーションなど。紙を漉ぐところから一人で制作しているため、月あたりの新規受付数に上限があります。</p><strong>まずは無料でご相談</strong><a class="btn primary" href="#contact">空き状況を相談する</a></article>
-</article>
-</div>
-</section>
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      modalTitle.textContent = card.dataset.title || "";
+      modalCopy.textContent = card.dataset.copy || "";
+      const visual = card.querySelector(".visual");
+      modalArt.className = "modal-art";
 
-<section class="section washi-shop" id="washi"><span class="label">06 / WASHI</span><div class="gallery-head"><div><p class="kicker">和紙を選ぶ</p><h2>紙が変わると、<br>折り紙はもっと美しくなる。</h2></div><p class="head-copy">素材を選ぶことも、折り紙の楽しみのひとつ。色・厚さ・サイズから、作品に合う一枚を見つけてください。すべて早川自身が漉いた和紙のため、作品との相性や折りやすさもあわせてご提案できます。</p></div><div class="washi-grid"><article><div class="swatch white">01</div><div><h3>生成り</h3><p>繊維の表情が美しい、素朴な一枚。</p><a href="#contact">この和紙について相談する →</a></div></article><article><div class="swatch indigo">02</div><div><h3>藍</h3><p>深い色と陰影を楽しむ一枚。</p><a href="#contact">この和紙について相談する →</a></div></article><article><div class="swatch red">03</div><div><h3>朱</h3><p>日本の色を感じる、印象的な一枚。</p><a href="#contact">この和紙について相談する →</a></div></article></div><p class="note">※商品名・価格・仕様は実際の販売内容に変更してください。</p></section>
+      if (visual) {
+        visual.classList.forEach((c) => {
+          if (c.startsWith("v")) modalArt.classList.add(c);
+        });
+      }
 
-<section class="section profile" id="profile"><span class="label">07 / ARTIST</span><div class="profile-grid"><div class="portrait"><span>SOTA<br>HAYAKAWA</span><small>PAPERMAKER & ORIGAMI ARTIST</small></div><div><p class="kicker">紙を漉ぎ、折り、紙文化を伝える。</p><h2>早川蒼太</h2><p class="role">折り紙作家 / 紙漉き職人 / 紙文化クリエイター</p><p>幼少期から折り紙に親しみ、難解折り紙と紙の表現を追求。作品に使う和紙も自らの手で漉くようになり、現在は紙づくりから折り紙の設計・制作までを一貫して手掛けています。折り図、展示、ワークショップ、企業とのコラボレーションなどを通して、紙が持つ可能性を現代へつないでいます。紙を漉ぐところから一人で手掛けているため、ご相談は早めをおすすめしています。</p><div class="facts"><span><b>2018</b>折紙探偵団国際コンベンション作品コンテスト優勝</span><span><b>2019</b>書籍出版・企業／メディアでの作品発表</span><span><b>2020–</b>作品制作・監修・コラボレーション</span></div><a class="link" href="#contact">プロフィール・活動について相談する →</a></div></div></section>
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    });
+  });
 
-<section class="section voices"><span class="label">08 / VOICE</span><div class="heading center"><p class="kicker">紙に触れた人の声</p><h2>「折る」から、<br>紙文化を好きになる。</h2></div><div class="voices"><blockquote>“<p>初めて和紙で折ったとき、紙そのものの表情に驚きました。</p><small>— 作品購入者</small></blockquote><blockquote>“<p>相談した段階で、制作までの流れやスケジュールが明確で安心できました。</p><small>— オーダーメイド依頼者</small></blockquote><blockquote>“<p>飾った瞬間に空間の印象が変わりました。紙なのに、とても強い存在感があります。</p><small>— 展示・コラボレーション</small></blockquote></div><p class="note">※実際のお客様の声があれば差し替えてください。</p></section>
+  function closeModal() {
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+  }
 
-<section class="section faq"><span class="label">09 / FAQ</span><div class="faq-grid"><div><p class="kicker">よくあるご質問</p><h2>相談する前に、<br>気になること。</h2></div><div>
-<details open><summary>相談だけでも大丈夫ですか？費用はかかりますか？<b>＋</b></summary><p>ご相談・お見積もりは無料です。まずは希望のイメージや用途をお聞かせください。強引な営業は行いません。</p></details>
-<details><summary>今から相談すると、いつ頃制作できますか？<b>＋</b></summary><p>時期によって異なりますが、目安として1〜3ヶ月程度お待ちいただく場合があります。冒頭の受付状況もあわせてご確認ください。</p></details>
-<details><summary>初心者でも折り図を楽しめますか？<b>＋</b></summary><p>作品ごとに難易度が異なります。商品ページで対象レベルを確認できるようにします。</p></details>
-<details><summary>和紙も早川さんご本人が漉いているのですか？<b>＋</b></summary><p>はい。作品に使う和紙は、早川自身が原料の繊維選びから手漉きしています。作品に合わせて染めや漉き合わせを施すこともあり、紙づくりから折りまで一貫してお任せいただけます。</p></details>
-<details><summary>和紙は折り紙に使えますか？<b>＋</b></summary><p>用途に合わせて厚さやサイズをご案内します。作品に適した紙を選ぶことで、折りやすさと仕上がりを両立できます。</p></details>
-<details><summary>企業・店舗・イベント向けの制作も可能ですか？<b>＋</b></summary><p>展示、空間演出、商品・パッケージ、ワークショップなど内容に合わせてご相談いただけます。まずは用途と規模感をお知らせください。</p></details>
-</div></div></section>
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (backdrop) backdrop.addEventListener("click", closeModal);
 
-<section class="section flow-section"><span class="label">10 / FLOW</span><div class="heading center"><p class="kicker">ご相談から制作まで</p><h2>相談は、3ステップです。</h2></div><div class="flow-steps"><article><small>STEP 01</small><h3>フォームで相談</h3><p>下のフォームから、ご希望やイメージをお送りください。1〜3営業日以内にご返信します。</p></article><article><small>STEP 02</small><h3>ヒアリング</h3><p>用途・サイズ・納期の希望をお伺いし、制作可否とおおよそのスケジュールをご案内します。</p></article><article><small>STEP 03</small><h3>お見積もり・ご契約</h3><p>内容とスケジュールにご納得いただけたら、正式にご依頼を承ります。</p></article></div></section>
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal();
+  });
+}
 
-<section class="section contact" id="contact"><div class="contact-paper"><p class="kicker">最後に、紙を一枚。</p><h2>まずは、<em>気軽にご相談ください。</em></h2><p>作品のご依頼、展示や企業コラボのご相談、和紙や折り図についてのご質問まで。<br>制作枠には限りがございますので、気になった今のうちにお問い合わせください。</p>
+const floatingCta = document.getElementById("floatingCta");
+const heroEl = document.querySelector(".hero");
+const contactEl = document.getElementById("contact");
 
-<form class="contact-form" id="contactForm" novalidate>
-  <div class="f-row"><label>お名前<span>必須</span><input type="text" name="name" required placeholder="山田 太郎"></label>
-  <label>メールアドレス<span>必須</span><input type="email" name="email" required placeholder="you@example.com"></label></div>
-  <div class="f-row"><label>ご相談内容<span>必須</span>
-    <select name="topic" required>
-      <option value="">選択してください</option>
-      <option>オーダーメイド作品の制作について</option>
-      <option>展示・空間演出・企業コラボについて</option>
-      <option>折り図について</option>
-      <option>和紙について</option>
-      <option>その他</option>
-    </select></label>
-  <label>ご希望の時期<span>任意</span><input type="text" name="timing" placeholder="例：2026年12月頃まで"></label></div>
-  <label class="f-full">メッセージ<span>必須</span><textarea name="message" required placeholder="ご相談内容・イメージ・用途などをご記入ください"></textarea></label>
-  <button class="btn primary big" type="submit">この内容で相談する →</button>
-  <p class="form-note">送信するとメールアプリが開きます。内容をご確認のうえ送信してください。通常1〜3営業日以内にご返信します。</p>
-</form>
+if (floatingCta && heroEl && contactEl && "IntersectionObserver" in window) {
+  let pastHero = false;
+  let inContact = false;
 
-<div class="contact-actions secondary"><a class="link" href="#gallery">相談の前に作品を見る →</a><a class="link" href="#diagram">折り図はすぐ購入できます →</a></div>
-<small>※フォームの送信先アドレスは実際のメールアドレスへ変更してください。</small></div></section>
-</main>
+  const heroObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      updateFloating();
+    });
+  }, {threshold: 0});
 
-<footer><div><b>早川蒼太</b><small>紙文化を、折る。</small></div><nav><a href="#profile">プロフィール</a><a href="#gallery">作品</a><a href="#diagram">折り図</a><a href="#washi">和紙</a><a href="#contact">お問い合わせ</a></nav><small>© Sota Hayakawa. All rights reserved.</small></footer>
+  heroObs.observe(heroEl);
 
-<a class="floating-cta" id="floatingCta" href="#contact">ご相談する</a>
+  const contactObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      inContact = entry.isIntersecting;
+      updateFloating();
+    });
+  }, {threshold: 0.15});
 
-<div class="modal" aria-hidden="true"><div class="backdrop"></div><div class="modal-box"><button class="close">×</button><div class="modal-art"></div><div class="modal-copy"><small>ORIGAMI WORK</small><h2></h2><p></p><a class="btn primary" href="#contact">この作品について相談する</a></div></div></div>
-<script src="script.js"></script></body></html>
+  contactObs.observe(contactEl);
+
+  function updateFloating() {
+    floatingCta.classList.toggle("show", pastHero && !inContact);
+  }
+}
+
+const form = document.getElementById("contactForm");
+
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const data = new FormData(form);
+    const name = (data.get("name") || "").toString().trim();
+    const email = (data.get("email") || "").toString().trim();
+    const topic = (data.get("topic") || "").toString().trim();
+    const timing = (data.get("timing") || "").toString().trim();
+    const message = (data.get("message") || "").toString().trim();
+
+    if (!name || !email || !topic || !message) {
+      showStatus("必須項目が未入力です。ご確認ください。", "err");
+      return;
+    }
+
+    const button = form.querySelector("button[type='submit']");
+    if (button) {
+      button.disabled = true;
+      button.textContent = "送信中...";
+    }
+
+    try {
+      const response = await fetch(GAS_ENDPOINT, {
+        method: "POST",
+        body: new URLSearchParams({
+          name: name,
+          email: email,
+          topic: topic,
+          timing: timing,
+          message: message
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.status === "success") {
+        showStatus("お問い合わせを受け付けました。ありがとうございます。", "ok");
+        form.reset();
+      } else {
+        showStatus("送信に失敗しました。時間をおいてもう一度お試しください。", "err");
+      }
+    } catch (error) {
+      showStatus("送信に失敗しました。時間をおいてもう一度お試しください。", "err");
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.textContent = "この内容で相談する →";
+      }
+    }
+  });
+}
+
+function showStatus(text, type) {
+  let statusEl = document.querySelector(".form-status");
+
+  if (!statusEl) {
+    statusEl = document.createElement("p");
+    statusEl.className = "form-status";
+    form.appendChild(statusEl);
+  }
+
+  statusEl.textContent = text;
+  statusEl.className = `form-status show ${type}`;
+}
