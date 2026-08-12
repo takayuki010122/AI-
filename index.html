@@ -1,12 +1,15 @@
+HTML
 <!doctype html>
 <html lang="ja">
 
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="紙を漉くところから、折り紙の設計・制作までを一人で手掛ける。早川蒼太の折り紙作品、折り図、和紙。ご相談・お問い合わせはこちらから。">
   <title>一枚の紙から生まれる、無限の美しさ。｜早川蒼太</title>
   <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -26,7 +29,7 @@
       </b>
     </a>
 
-    <nav>
+    <nav class="desktop-nav">
       <a href="#story">紙文化</a>
       <a href="#process">制作工程</a>
       <a href="#gallery">作品</a>
@@ -39,12 +42,12 @@
       ご相談・お問い合わせ
     </a>
 
-    <button class="menu" aria-label="メニュー">
+    <button class="menu" id="menuToggle" aria-label="メニュー" aria-expanded="false">
       ☰
     </button>
   </header>
 
-  <nav class="mobile-nav">
+  <nav class="mobile-nav" id="mobileNav">
     <a href="#story">紙文化</a>
     <a href="#process">制作工程</a>
     <a href="#gallery">作品</a>
@@ -59,7 +62,7 @@
   <main id="top">
 
     <!-- =========================
-         HERO
+          HERO
     ========================== -->
 
     <section class="hero">
@@ -127,14 +130,14 @@
       </div>
 
       <div class="hero-note">
-        一枚の紙　｜　折る　｜　ひらく　｜　生まれる
+        一枚の紙 ｜ 折る ｜ ひらく ｜ 生まれる
       </div>
 
     </section>
 
 
     <!-- =========================
-         STORY
+          STORY
     ========================== -->
 
     <section class="section intro" id="story">
@@ -250,7 +253,7 @@
 
 
     <!-- =========================
-         WASHI STORY
+          WASHI STORY
     ========================== -->
 
     <section class="section washi" id="washi-story">
@@ -284,7 +287,7 @@
           </p>
 
           <h2>
-            和紙を漉ぐ手と、<br>
+            和紙を漉く手と、<br>
             折り上げる手は、同じ手です。
           </h2>
 
@@ -319,7 +322,7 @@
 
 
     <!-- =========================
-         PROCESS
+          PROCESS
     ========================== -->
 
     <section class="section process" id="process">
@@ -331,7 +334,7 @@
       <div class="heading center">
 
         <p class="kicker">
-          紙を漉ぐことも、折ることも、一人の仕事。
+          紙を漉くことも、折ることも、一人の仕事。
         </p>
 
         <h2>
@@ -391,7 +394,7 @@
       </div>
 
       <p class="process-note">
-        紙を漉ぐところから折り上げるまで、
+        紙を漉くところから折り上げるまで、
         すべて早川蒼太が一人で手掛けています。
         そのため、同時にお受けできる制作には限りがあります。
       </p>
@@ -400,7 +403,7 @@
 
 
     <!-- =========================
-         GALLERY
+          GALLERY
     ========================== -->
 
     <section class="section gallery" id="gallery">
@@ -424,25 +427,25 @@
 
         </div>
 
-        <div class="filters">
+        <div class="filters" id="galleryFilters">
 
-          <button class="active" data-filter="all">
+          <button class="filter-btn active" data-filter="all">
             すべて
           </button>
 
-          <button data-filter="animal">
+          <button class="filter-btn" data-filter="animal">
             動物
           </button>
 
-          <button data-filter="architecture">
+          <button class="filter-btn" data-filter="architecture">
             建築
           </button>
 
-          <button data-filter="season">
+          <button class="filter-btn" data-filter="season">
             季節
           </button>
 
-          <button data-filter="space">
+          <button class="filter-btn" data-filter="space">
             展示・空間
           </button>
 
@@ -450,7 +453,7 @@
 
       </div>
 
-      <div class="grid">
+      <div class="grid" id="galleryGrid">
 
         <button
           class="card tall"
@@ -557,7 +560,7 @@
 
 
     <!-- =========================
-         DIAGRAM
+          DIAGRAM
     ========================== -->
 
     <section class="section diagram" id="diagram">
@@ -597,8 +600,8 @@
             すぐにお求めいただけます。
             多くは、その作品のために漉いた専用紙とセットで
             お届けしているため、紙選びに迷う必要もありません。
-            一方でオーダーメイドの完成作品は、
-            早川が紙を漉ぐところから一点ずつ手掛けるため、
+            一方のオーダーメイドの完成作品は、
+            早川が紙を漉くところから一点ずつ手掛けるため、
             まずはご相談から承っています。
           </p>
 
@@ -656,7 +659,7 @@
           <p>
             完成作品のご注文、展示・空間演出、
             企業コラボレーションなど。
-            紙を漉ぐところから一人で制作しているため、
+            紙を漉くところから一人で制作しているため、
             月あたりの新規受付数に上限があります。
           </p>
 
@@ -676,7 +679,7 @@
 
 
     <!-- =========================
-         WASHI
+          WASHI
     ========================== -->
 
     <section class="section washi-shop" id="washi">
@@ -797,7 +800,7 @@
 
 
     <!-- =========================
-         PROFILE
+          PROFILE
     ========================== -->
 
     <section class="section profile" id="profile">
@@ -824,7 +827,7 @@
         <div>
 
           <p class="kicker">
-            紙を漉ぎ、折り、紙文化を伝える。
+            紙を漉き、折り、紙文化を伝える。
           </p>
 
           <h2>
@@ -844,7 +847,7 @@
             折り図、展示、ワークショップ、
             企業とのコラボレーションなどを通して、
             紙が持つ可能性を現代へつないでいます。
-            紙を漉ぐところから一人で手掛けているため、
+            紙を漉くところから一人で手掛けているため、
             ご相談は早めをおすすめしています。
           </p>
 
@@ -879,7 +882,7 @@
 
 
     <!-- =========================
-         VOICE
+          VOICE
     ========================== -->
 
     <section class="section voices">
@@ -901,7 +904,7 @@
 
       </div>
 
-      <div class="voices">
+      <div class="voices-container">
 
         <blockquote>
 
@@ -960,7 +963,7 @@
 
 
     <!-- =========================
-         FAQ
+          FAQ
     ========================== -->
 
     <section class="section faq">
@@ -1092,7 +1095,7 @@
 
 
     <!-- =========================
-         FLOW
+          FLOW
     ========================== -->
 
     <section class="section flow-section">
@@ -1175,7 +1178,7 @@
 
 
     <!-- =========================
-         CONTACT
+          CONTACT
     ========================== -->
 
     <section class="section contact" id="contact">
@@ -1349,7 +1352,7 @@
 
 
   <!-- =========================
-       FOOTER
+        FOOTER
   ========================== -->
 
   <footer>
@@ -1400,7 +1403,7 @@
 
 
   <!-- =========================
-       FLOATING CTA
+        FLOATING CTA
   ========================== -->
 
   <a
@@ -1413,19 +1416,20 @@
 
 
   <!-- =========================
-       MODAL
+        MODAL
   ========================== -->
 
   <div
     class="modal"
+    id="galleryModal"
     aria-hidden="true"
   >
 
-    <div class="backdrop"></div>
+    <div class="backdrop" id="modalBackdrop"></div>
 
     <div class="modal-box">
 
-      <button class="close">
+      <button class="close" id="modalClose">
         ×
       </button>
 
@@ -1437,13 +1441,14 @@
           ORIGAMI WORK
         </small>
 
-        <h2></h2>
+        <h2 id="modalTitle"></h2>
 
-        <p></p>
+        <p id="modalCopy"></p>
 
         <a
           class="btn primary"
           href="#contact"
+          id="modalCta"
         >
           この作品について相談する
         </a>
@@ -1454,8 +1459,101 @@
 
   </div>
 
+  <!-- インラインJavaScript（スクリプト処理を統合） -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. モバイルナビゲーションのトグル処理
+      const menuToggle = document.getElementById('menuToggle');
+      const mobileNav = document.getElementById('mobileNav');
 
-  <script src="script.js"></script>
+      if (menuToggle && mobileNav) {
+        menuToggle.addEventListener('click', () => {
+          const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+          menuToggle.setAttribute('aria-expanded', !isExpanded);
+          mobileNav.classList.toggle('is-active');
+        });
+
+        // モバイルナビ内のリンククリック時にメニューを閉じる
+        mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            mobileNav.classList.remove('is-active');
+          });
+        });
+      }
+
+      // 2. ギャラリーフィルタリング機能
+      const filterButtons = document.querySelectorAll('#galleryFilters .filter-btn');
+      const galleryCards = document.querySelectorAll('#galleryGrid .card');
+
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+
+          galleryCards.forEach(card => {
+            if (filter === 'all' || card.getAttribute('data-cat') === filter) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // 3. ギャラリーモーダル機能
+      const modal = document.getElementById('galleryModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalCopy = document.getElementById('modalCopy');
+      const modalClose = document.getElementById('modalClose');
+      const modalBackdrop = document.getElementById('modalBackdrop');
+      const modalCta = document.getElementById('modalCta');
+
+      galleryCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const title = card.getAttribute('data-title');
+          const copy = card.getAttribute('data-copy');
+
+          if (modalTitle) modalTitle.textContent = title;
+          if (modalCopy) modalCopy.textContent = copy;
+
+          if (modal) {
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+          }
+        });
+      });
+
+      const closeModal = () => {
+        if (modal) {
+          modal.classList.remove('is-open');
+          modal.setAttribute('aria-hidden', 'true');
+        }
+      };
+
+      if (modalClose) modalClose.addEventListener('click', closeModal);
+      if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+      if (modalCta) modalCta.addEventListener('click', closeModal);
+
+      // 4. お問い合わせフォーム送信バリデーション
+      const contactForm = document.getElementById('contactForm');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          if (!contactForm.checkValidity()) {
+            alert('必須項目をすべて入力してください。');
+            return;
+          }
+
+          alert('お問い合わせを受け付けました。1〜3営業日以内にご返信いたします。');
+          contactForm.reset();
+        });
+      }
+    });
+  </script>
 
 </body>
 
