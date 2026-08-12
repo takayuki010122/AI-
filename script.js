@@ -1,5 +1,6 @@
 const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz6AcmHTnKrApNczD70T9GN2nNxImwdIpGuR09smacDZHkjaYno_CuXBUvIoXXLceoE/exec';
 
+// モバイルナビゲーション
 const menuBtn = document.querySelector(".menu");
 const mobileNav = document.querySelector(".mobile-nav");
 
@@ -12,6 +13,7 @@ if (menuBtn && mobileNav) {
   });
 }
 
+// スクロール時の要素表示アニメーション
 const revealEls = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window && revealEls.length) {
@@ -22,12 +24,13 @@ if ("IntersectionObserver" in window && revealEls.length) {
         io.unobserve(entry.target);
       }
     });
-  }, {threshold: 0.2});
+  }, { threshold: 0.2 });
   revealEls.forEach((el) => io.observe(el));
 } else {
   revealEls.forEach((el) => el.classList.add("visible"));
 }
 
+// フィルター機能
 const filterBtns = document.querySelectorAll(".filters button");
 const cards = document.querySelectorAll(".card");
 
@@ -43,6 +46,7 @@ filterBtns.forEach((btn) => {
   });
 });
 
+// モーダル機能
 const modal = document.querySelector(".modal");
 
 if (modal) {
@@ -83,6 +87,7 @@ if (modal) {
   });
 }
 
+// フローティングCTA制御
 const floatingCta = document.getElementById("floatingCta");
 const heroEl = document.querySelector(".hero");
 const contactEl = document.getElementById("contact");
@@ -96,7 +101,7 @@ if (floatingCta && heroEl && contactEl && "IntersectionObserver" in window) {
       pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
       updateFloating();
     });
-  }, {threshold: 0});
+  }, { threshold: 0 });
 
   heroObs.observe(heroEl);
 
@@ -105,7 +110,7 @@ if (floatingCta && heroEl && contactEl && "IntersectionObserver" in window) {
       inContact = entry.isIntersecting;
       updateFloating();
     });
-  }, {threshold: 0.15});
+  }, { threshold: 0.15 });
 
   contactObs.observe(contactEl);
 
@@ -114,6 +119,7 @@ if (floatingCta && heroEl && contactEl && "IntersectionObserver" in window) {
   }
 }
 
+// お問い合わせフォーム送信（GAS連携）
 const form = document.getElementById("contactForm");
 
 if (form) {
@@ -139,26 +145,29 @@ if (form) {
     }
 
     try {
-      const response = await fetch(GAS_ENDPOINT, {
-        method: "POST",
-        body: new URLSearchParams({
-          name: name,
-          email: email,
-          topic: topic,
-          timing: timing,
-          message: message
-        })
+      // GASへのCORS回避用リクエストの設定
+      const payload = new URLSearchParams({
+        name: name,
+        email: email,
+        topic: topic,
+        timing: timing,
+        message: message
       });
 
-      const result = await response.json();
+      await fetch(GAS_ENDPOINT, {
+        method: "POST",
+        mode: "no-cors", // CORSエラーを回避
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: payload
+      });
 
-      if (result.status === "success") {
-        showStatus("お問い合わせを受け付けました。ありがとうございます。", "ok");
-        form.reset();
-      } else {
-        showStatus("送信に失敗しました。時間をおいてもう一度お試しください。", "err");
-      }
+      // no-corsモードではレスポンス内容が取得できないため、例外が出なければ成功とみなします
+      showStatus("お問い合わせを受け付けました。ありがとうございます。", "ok");
+      form.reset();
     } catch (error) {
+      console.error("送信エラー:", error);
       showStatus("送信に失敗しました。時間をおいてもう一度お試しください。", "err");
     } finally {
       if (button) {
@@ -175,9 +184,11 @@ function showStatus(text, type) {
   if (!statusEl) {
     statusEl = document.createElement("p");
     statusEl.className = "form-status";
-    form.appendChild(statusEl);
+    if (form) form.appendChild(statusEl);
   }
 
-  statusEl.textContent = text;
-  statusEl.className = `form-status show ${type}`;
+  if (statusEl) {
+    statusEl.textContent = text;
+    statusEl.className = `form-status show ${type}`;
+  }
 }
