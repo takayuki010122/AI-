@@ -1,9 +1,8 @@
-// ---- 設定 ----
-const CONTACT_EMAIL = "contact@example.com"; // 実際の問い合わせ先メールアドレスへ変更してください
+const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz6AcmHTnKrApNczD70T9GN2nNxImwdIpGuR09smacDZHkjaYno_CuXBUvIoXXLceoE/exec';
 
-// ---- モバイルメニュー ----
 const menuBtn = document.querySelector(".menu");
 const mobileNav = document.querySelector(".mobile-nav");
+
 if (menuBtn && mobileNav) {
   menuBtn.addEventListener("click", () => {
     mobileNav.classList.toggle("open");
@@ -13,28 +12,25 @@ if (menuBtn && mobileNav) {
   });
 }
 
-// ---- スクロール reveal ----
 const revealEls = document.querySelectorAll(".reveal");
+
 if ("IntersectionObserver" in window && revealEls.length) {
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          io.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.2 }
-  );
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.2});
   revealEls.forEach((el) => io.observe(el));
 } else {
   revealEls.forEach((el) => el.classList.add("visible"));
 }
 
-// ---- ギャラリーフィルター ----
 const filterBtns = document.querySelectorAll(".filters button");
 const cards = document.querySelectorAll(".card");
+
 filterBtns.forEach((btn) => {
   btn.addEventListener("click", () => {
     filterBtns.forEach((b) => b.classList.remove("active"));
@@ -47,8 +43,8 @@ filterBtns.forEach((btn) => {
   });
 });
 
-// ---- 作品モーダル ----
 const modal = document.querySelector(".modal");
+
 if (modal) {
   const modalArt = modal.querySelector(".modal-art");
   const modalTitle = modal.querySelector(".modal-copy h2");
@@ -62,11 +58,13 @@ if (modal) {
       modalCopy.textContent = card.dataset.copy || "";
       const visual = card.querySelector(".visual");
       modalArt.className = "modal-art";
+
       if (visual) {
         visual.classList.forEach((c) => {
           if (c.startsWith("v")) modalArt.classList.add(c);
         });
       }
+
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
     });
@@ -76,41 +74,39 @@ if (modal) {
     modal.classList.remove("open");
     modal.setAttribute("aria-hidden", "true");
   }
-  closeBtn && closeBtn.addEventListener("click", closeModal);
-  backdrop && backdrop.addEventListener("click", closeModal);
+
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (backdrop) backdrop.addEventListener("click", closeModal);
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeModal();
   });
 }
 
-// ---- フローティングCTA(ヒーロー通過後〜問い合わせセクション到達前に表示) ----
 const floatingCta = document.getElementById("floatingCta");
 const heroEl = document.querySelector(".hero");
 const contactEl = document.getElementById("contact");
+
 if (floatingCta && heroEl && contactEl && "IntersectionObserver" in window) {
   let pastHero = false;
   let inContact = false;
 
-  const heroObs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-        updateFloating();
-      });
-    },
-    { threshold: 0 }
-  );
+  const heroObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      pastHero = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      updateFloating();
+    });
+  }, {threshold: 0});
+
   heroObs.observe(heroEl);
 
-  const contactObs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        inContact = entry.isIntersecting;
-        updateFloating();
-      });
-    },
-    { threshold: 0.15 }
-  );
+  const contactObs = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      inContact = entry.isIntersecting;
+      updateFloating();
+    });
+  }, {threshold: 0.15});
+
   contactObs.observe(contactEl);
 
   function updateFloating() {
@@ -118,10 +114,10 @@ if (floatingCta && heroEl && contactEl && "IntersectionObserver" in window) {
   }
 }
 
-// ---- 問い合わせフォーム(バックエンド未接続のため mailto で送信) ----
 const form = document.getElementById("contactForm");
+
 if (form) {
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const data = new FormData(form);
@@ -136,37 +132,52 @@ if (form) {
       return;
     }
 
-    const subject = `【LPよりご相談】${topic}`;
-    const bodyLines = [
-      `お名前：${name}`,
-      `メールアドレス：${email}`,
-      `ご相談内容：${topic}`,
-      `ご希望の時期：${timing || "未記入"}`,
-      "",
-      "メッセージ：",
-      message,
-    ];
-    const body = bodyLines.join("\n");
+    const button = form.querySelector("button[type='submit']");
+    if (button) {
+      button.disabled = true;
+      button.textContent = "送信中...";
+    }
 
-    const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
+    try {
+      const response = await fetch(GAS_ENDPOINT, {
+        method: "POST",
+        body: new URLSearchParams({
+          name: name,
+          email: email,
+          topic: topic,
+          timing: timing,
+          message: message
+        })
+      });
 
-    window.location.href = mailto;
-    showStatus(
-      "メールアプリが開きます。内容をご確認のうえ送信してください。",
-      "ok"
-    );
+      const result = await response.json();
+
+      if (result.status === "success") {
+        showStatus("お問い合わせを受け付けました。ありがとうございます。", "ok");
+        form.reset();
+      } else {
+        showStatus("送信に失敗しました。時間をおいてもう一度お試しください。", "err");
+      }
+    } catch (error) {
+      showStatus("送信に失敗しました。時間をおいてもう一度お試しください。", "err");
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.textContent = "この内容で相談する →";
+      }
+    }
   });
 }
 
 function showStatus(text, type) {
   let statusEl = document.querySelector(".form-status");
+
   if (!statusEl) {
     statusEl = document.createElement("p");
     statusEl.className = "form-status";
     form.appendChild(statusEl);
   }
+
   statusEl.textContent = text;
   statusEl.className = `form-status show ${type}`;
 }
